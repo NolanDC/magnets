@@ -6,21 +6,6 @@ function Magnet(id, text, x, y) {
   this.el = this.html();
 } 
 
-/*  
-  this.save = function(cb) {
-    controller.magnets.update(this, cb);
-  }
-
-  this.toQueryString = function() {
-    return Queryables.compose({
-      x: this.x,
-      y: this.y,
-      text: this.text,
-      id: this.id
-    })
-  }
-*/
-
 Magnet.prototype.save = function() {
   controller.saveMagnet(this);
 }

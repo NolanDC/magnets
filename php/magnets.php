@@ -24,13 +24,13 @@ class Magnet {
     return $magnets;
   }
 
-  public static function update($data) {
+  public static function update($data, $user_id) {
     $x = mysql_real_escape_string($data["x"]);
     $y = mysql_real_escape_string($data["y"]);
     $id = mysql_real_escape_string($data["id"]);
-
-    $update_query = "UPDATE magnets SET x='%s', y='%s' WHERE id='%s';";
-    $sanitized_query = sprintf($update_query, $x, $y, $id);
+    $locked_by = $user_id;
+    $update_query = "UPDATE magnets SET x='%s', y='%s', locked_by='%d', locked_at=NOW() WHERE id='%s';";
+    $sanitized_query = sprintf($update_query, $x, $y, $locked_by, $id);
     return mysql_query($sanitized_query);
   }
 

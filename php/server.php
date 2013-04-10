@@ -30,26 +30,12 @@ class MagnetServer implements MessageComponentInterface {
     $data = json_decode($msg, true);
     //var_dump($data);
     if($data["message"] == "updatemagnet") {
-      Magnet::update($data["data"]);
-      //echo("id: " . $data["data"]["id"]);
-      echo("receiving message from server");
+      Magnet::update($data["data"], $from->resourceId);
+      //echo("user: " . $from->resourceId);
       foreach ($this->clients as $client) {
-        echo("listing clients" . "\n");
         if ($from !== $client) {
-          echo("not the self" . "\n");
-          $data = array('message' => 'updateMagnets', 'data' => Magnet::getAll());
+          $data = array('message' => 'updateMagnets', 'data' => array($data["data"]));
           $client->send(json_encode($data));
-          echo("data: " . $data);
-                  // The sender is not the receiver, send to each client connected
-
-/*          $get_magnets_query = "select * from magnets";
-          $results = mysql_query($get_magnets_query);
-          $magnets = array();
-          while($row = mysql_fetch_assoc($results)) {
-            $magnets[] = $row;
-          }
-          $client->send(json_encode($magnets));*/
-
         }
       }      
     }

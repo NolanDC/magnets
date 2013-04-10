@@ -5,6 +5,7 @@ function Magnet(options) {
   };
   this.options = $.extend(defaults, options);
   this.el = this.html();
+  this.locked = false;
 } 
 
 Magnet.prototype.save = function() {
@@ -22,12 +23,27 @@ Magnet.prototype.json = function() {
   return this.options;
 }
 
+Magnet.prototype.lock = function() {
+  this.el.addClass('locked');
+  var self = this;
+  setTimeout(function() {
+    self.unlock();
+  }, 10000);
+}
+
+Magnet.prototype.unlock = function() {
+  this.el.removeClass('locked');
+}
+
 Magnet.prototype.update = function(data) {
   this.options = $.extend(this.options, data);
-  console.log('data:', data);
-  console.log('options data:', this.options);
+
   this.el.css({
     left: this.options.x + 'px', 
     top: this.options.y + 'px'
   });  
+
+  if(data.locked_by != controller.getClientId) {
+    this.lock();
+  }
 }

@@ -1,17 +1,5 @@
 view = {
   magnets: {
-    init: function() {
-    },
-
-    addToFridge: function() {
-      for(var i = 0; i < model.magnets.collection.length; i++) {
-        var magnet = model.magnets.collection[i];
-        $('#fridge').append(magnet.el)
-      }
-      $('.magnet').draggable({
-        stop: view.magnets.finishDrop
-      });
-    },
 
     finishDrop: function() {
       var magnet = $(this).data('magnet');

@@ -1,7 +1,5 @@
 <?php
 
-
-
 require __DIR__ . '/vendor/autoload.php';
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -22,30 +20,24 @@ class MagnetServer implements MessageComponentInterface {
 
   public function onOpen(ConnectionInterface $conn) {
     $this->clients->attach($conn);
-    $data = array('message' => 'updateMagnets', 'data' => Magnet::getAll());
+    $data = array('message' => 'updateMagnets', 'data' => Magnet::getAll(), 'clientId' => $conn->resourceId);
     $conn->send(json_encode($data));
   }
 
   public function onMessage(ConnectionInterface $from, $msg) {
     $data = json_decode($msg, true);
-    //var_dump($data);
+
     if($data["message"] == "updatemagnet") {
       Magnet::update($data["data"], $from->resourceId);
-      //echo("user: " . $from->resourceId);
+
       foreach ($this->clients as $client) {
         if ($from !== $client) {
           $data = array('message' => 'updateMagnets', 'data' => array($data["data"]));
+
           $client->send(json_encode($data));
         }
       }      
     }
-    
-
-/*   
-  $numRecv = count($this->clients) - 1;
-   echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-    , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-*/
 
   }
 

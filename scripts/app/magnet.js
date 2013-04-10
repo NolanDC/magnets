@@ -24,15 +24,16 @@ Magnet.prototype.json = function() {
 }
 
 Magnet.prototype.lock = function() {
-  this.el.addClass('locked');
+  this.el.addClass('locked').draggable('disable');
   var self = this;
+
   setTimeout(function() {
     self.unlock();
   }, 10000);
 }
 
 Magnet.prototype.unlock = function() {
-  this.el.removeClass('locked');
+  this.el.removeClass('locked').draggable('enable');
 }
 
 Magnet.prototype.update = function(data) {

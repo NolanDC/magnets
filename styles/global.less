@@ -16,10 +16,15 @@
     &.locked {
       background:black;
       color: white;
+      cursor: default;
+
+      &:hover {
+        box-shadow: none;
+      }
     }
 
     &:hover {
-      background: #ddd;
+      box-shadow: 0 0 3px 1px #aaa;
     }
   }
 

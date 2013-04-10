@@ -15,8 +15,8 @@ view = {
 
     finishDrop: function() {
       var magnet = $(this).data('magnet');
-      magnet.x = parseInt($(this).css('left'));
-      magnet.y = parseInt($(this).css('top'));
+      magnet.options.x = parseInt($(this).css('left'));
+      magnet.options.y = parseInt($(this).css('top'));
       magnet.save();
     },
 

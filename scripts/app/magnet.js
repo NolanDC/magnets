@@ -48,3 +48,13 @@ Magnet.prototype.update = function(data) {
     this.lock();
   }
 }
+
+Magnet.prototype.match = function(text) {
+  console.log(this.options.text)
+  console.log(text);
+  if(this.options.text.search(text) >= 0) {
+    return true;
+    console.log('true');
+  }
+  return false;
+}

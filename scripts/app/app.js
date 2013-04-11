@@ -9,4 +9,11 @@ $(function() {
 
   //view.magnets.init();
   $('#fridge').fridge();
+
+  $('#search input').on('keyup', function() {
+    $(document).trigger('searchmagnets', $(this).val());
+  })
+
+  Mousetrap.bind('s', function(e) { $('#search input').focus().select(); e.preventDefault(); });
+
 })

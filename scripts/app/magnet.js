@@ -34,9 +34,6 @@ Magnet.prototype.unlock = function() {
 }
 
 Magnet.prototype.update = function(data) {
-  if(!data)
-    data = this.options;
-
   this.options = $.extend(this.options, data);
 
   this.el.css({
@@ -44,9 +41,7 @@ Magnet.prototype.update = function(data) {
     top: this.options.y + 'px'
   });  
 
-  var time_since_lock = lib.timeDifference(new Date(), new Date(this.options.locked_at));
-
-  if(!this.ownedByUser() && time_since_lock < 30) {
+  if(!this.ownedByUser() && this.stillLocked()) {
     this.lock();
   }
 }
@@ -55,12 +50,14 @@ Magnet.prototype.ownedByUser = function() {
   return (this.options.locked_by == controller.getClientId);
 }
 
+Magnet.prototype.stillLocked = function() {
+  var time_since_lock = lib.timeDifference(new Date(), new Date(this.options.locked_at));
+  return (time_since_lock < 30);
+}
+
 Magnet.prototype.match = function(text) {
-  console.log(this.options.text)
-  console.log(text);
   if(this.options.text.search(text) >= 0) {
     return true;
-    console.log('true');
   }
   return false;
 }

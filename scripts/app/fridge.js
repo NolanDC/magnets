@@ -27,6 +27,7 @@ Fridge.prototype.createMagnet = function(data) {
   magnet.el.draggable({
     stop: view.magnets.finishDrop
   });
+  magnet.update()
 }
 
 Fridge.prototype.search = function(text) {

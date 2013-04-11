@@ -32,7 +32,8 @@ class MagnetServer implements MessageComponentInterface {
 
       foreach ($this->clients as $client) {
         if ($from !== $client) {
-          $data = array('message' => 'updateMagnets', 'data' => array($data["data"]));
+          $magnet = Magnet::get($data["data"]["id"]);
+          $data = array('message' => 'updateMagnets', 'data' => $magnet );
 
           $client->send(json_encode($data));
         }

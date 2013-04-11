@@ -13,10 +13,7 @@ Magnet.prototype.save = function() {
 }
 
 Magnet.prototype.html = function() {
-  return $('<div class="magnet">' + this.options.text + '</div>').css({
-    left: this.options.x + 'px',
-    top: this.options.y + 'px'
-  }).attr('id', this.options.id).data('magnet', this);
+  return $('<div class="magnet">' + this.options.text + '</div>').attr('id', this.options.id).data('magnet', this);
 }
 
 Magnet.prototype.json = function() {
@@ -37,6 +34,9 @@ Magnet.prototype.unlock = function() {
 }
 
 Magnet.prototype.update = function(data) {
+  if(!data)
+    data = this.options;
+
   this.options = $.extend(this.options, data);
 
   this.el.css({
@@ -44,9 +44,15 @@ Magnet.prototype.update = function(data) {
     top: this.options.y + 'px'
   });  
 
-  if(data.locked_by != controller.getClientId) {
+  var time_since_lock = lib.timeDifference(new Date(), new Date(this.options.locked_at));
+
+  if(!this.ownedByUser() && time_since_lock < 30) {
     this.lock();
   }
+}
+
+Magnet.prototype.ownedByUser = function() {
+  return (this.options.locked_by == controller.getClientId);
 }
 
 Magnet.prototype.match = function(text) {

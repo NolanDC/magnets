@@ -34,7 +34,19 @@ class Magnet {
     return mysql_query($sanitized_query);
   }
 
+  public static function get($id) {
+    $id = mysql_real_escape_string($id);
+    $select_query = "SELECT * FROM magnets WHERE id=%s;";
+    $sanitized_query = sprintf($select_query, $id);
+    echo('query: ' . $sanitized_query);
 
+    $results = mysql_query($sanitized_query);
+    $magnets = array();
+    while($row = mysql_fetch_assoc($results)) {
+        $magnets[] = $row;
+    }
+    return $magnets;
+  }
 
 /*  print_r($_GET);
   $x = $_GET["x"];

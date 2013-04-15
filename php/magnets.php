@@ -3,6 +3,7 @@
 include 'databaseConnection.php';
 
 class Magnet {
+  
   public static function create($text, $x, $y) {
     $insert_query = "INSERT into magnets(text, x, y) values('%s', %s, %s);";
     $query_string = sprintf($insert_query, $text, $x, $y);
@@ -48,14 +49,6 @@ class Magnet {
     return $magnets;
   }
 
-/*  print_r($_GET);
-  $x = $_GET["x"];
-  $y = $_GET["y"];
-  $id = $_GET["id"];
-
-  $update_query = "UPDATE magnets SET x='%s', y='%s' WHERE id='%s'";
-  $sanitized_update_query = sprintf($update_query, $x, $y, $id);
-  mysql_query($sanitized_update_query);*/
 }
 
 ?>

@@ -33,7 +33,6 @@ Fridge.prototype.createMagnet = function(data) {
 Fridge.prototype.search = function(text) {
   if(text == "") {
     $('.magnet').removeClass('matched');
-    console.log('ok...');
   } else {
     for (var id in this.magnets){
       if (this.magnets.hasOwnProperty(id)) {

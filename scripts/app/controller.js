@@ -22,7 +22,6 @@ controller = {
   },
 
   saveMagnet: function(magnet) {
-    controller.conn.send('hi beotch');
     controller.conn.send(JSON.stringify({
       message: 'updatemagnet',
       data: magnet.json()
